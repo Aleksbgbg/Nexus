@@ -2,11 +2,12 @@
 div.root
   h1 iamaleks.dev Nexus
   ul
-    a(v-for="website of websites" :href="website.root")
-      li
-        img(:src="website.image" :alt="`${website.name} logo`" width="50" height="50")
-        h2 {{ website.name }}
-        p {{ website.description }}
+    li(v-for="website of websites")
+      div
+        a(:href="website.root")
+          img(:src="website.image" :alt="`${website.name} logo`" width="50" height="50")
+          h2 {{ website.name }}
+          p {{ website.description }}
 </template>
 
 <script lang="ts">
@@ -23,12 +24,12 @@ export default class Root extends Vue {
 <style lang="stylus" scoped>
 @import url("https://fonts.googleapis.com/css?family=Open+Sans|Muli&display=swap")
 
-$background-default = white
 $text-default = #515A5A
+$background-default = darken(white, 2%)
 
 .root
   color: darken($text-default, 30%)
-  background-color: darken($background-default, 2%)
+  background-color: $background-default
 
   height: 100vh
 
@@ -47,38 +48,42 @@ $text-default = #515A5A
     flex-wrap: wrap
     justify-content: space-evenly
 
-    a
-      color: inherit
-      text-decoration: none
+    li
+      list-style-type: none
 
-      padding: 5px
       margin: 10px
-      width: 150px
-
-      border-width: 2px
-      border-color: transparent
-      border-style: solid
+      width: 175px
 
       &:hover
         animation: moving-gradient 2s normal infinite
 
-      @keyframes moving-gradient
-        for value in (0..10)
-          { percentage((value / 10)) }
-            border-image: linear-gradient(unit((360 / 10) * value, "deg"), #e66465, #9198e5) 10
+        @keyframes moving-gradient
+          for value in (0..10)
+            { percentage((value / 10)) }
+              background-image: linear-gradient(unit((360 / 10) * value, "deg"), #e66465, #9198e5)
 
-      li
-        list-style-type: none
+      div
+        background-color: $background-default
 
-        h2
-          font-size: 16px
-          text-transform: uppercase
+        box-sizing: border-box
+        margin: 5px
+        padding: 10px
+        height: "calc(100% - %s)" % (2 * @margin)
+        width: "calc(100% - %s)" % (2 * @margin)
 
-        p
-          margin: 0
+        a
+          color: inherit
+          text-decoration: none
 
-          color: darken($text-default, 10%)
+          h2
+            font-size: 16px
+            text-transform: uppercase
 
-          font-family: "Muli"
-          font-size: 14px
+          p
+            color: darken($text-default, 10%)
+
+            margin: 0
+
+            font-family: "Muli"
+            font-size: 14px
 </style>
